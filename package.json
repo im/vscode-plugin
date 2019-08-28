@@ -3,24 +3,23 @@
     "displayName": "vscode-tools",
     "description": "vscode 工具合集",
     "version": "0.0.3",
-    "publisher": "im",
+    "publisher": "tangxiaomi",
     "keywords": [
         "vscode",
         "tools",
         "translate"
     ],
+    "icon": "images/icon.jpg",
     "engines": {
         "vscode": "^1.37.0"
     },
-    "icon": "images/icon.jpg",
     "categories": [
         "Other"
     ],
     "activationEvents": [
-        "onCommand:extension.helloWorld",
-        "onCommand:extension.translateon"
+        "*"
     ],
-    "main": "./src/extension.js",
+    "main": "./out/extension.js",
     "contributes": {
         "commands": [
             {
@@ -28,125 +27,88 @@
                 "title": "Hello World"
             },
             {
-                "command": "extension.demo.getCurrentFilePath",
-                "title": "获取当前文件(夹)路径"
+                "command": "translate.select",
+                "title": "选择内容",
+                "category": "Comment Translate"
             },
             {
-                "command": "extension.translateon",
-                "title": "translate on"
+                "command": "translate.changeTargetLanguage",
+                "title": "切换翻译语言",
+                "category": "Comment Translate"
+            },
+            {
+                "command": "translate.replaceSelections",
+                "title": "替换翻译内容",
+                "category": "Comment Translate"
             }
         ],
         "keybindings": [
             {
-                "command": "extension.helloWorld",
-                "key": "ctrl+f10",
-                "mac": "cmd+f10",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "extension.translateon",
-                "key": "ctrl+t",
-                "mac": "cmd+t",
-                "when": "editorTextFocus"
-            },
-            {
-                "command": "extension.translateReplace",
-                "key": "ctrl+shift+r",
-                "mac": "cmd+shift+r",
-                "when": "editorTextFocus"
+                "command": "translate.select",
+                "key": "ctrl+shift+s"
             }
         ],
-        "configuration": {
-            "type": "object",
-            "title": "translation configuration",
-            "properties": {
-                "translation.api": {
-                    "type": "string",
-                    "default": "google-cn",
-                    "description": "api for translation now support google-cn and google"
-                },
-                "translation.fromLanguage": {
-                    "type": "string",
-                    "default": "en",
-                    "description": "from language"
-                },
-                "translation.targetLanguage": {
-                    "type": "string",
-                    "default": "zh-CN",
-                    "description": "target language"
-                },
-                "translation.detection": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "language detection"
+        "configuration": [
+            {
+                "title": "Comment Translate Configuration",
+                "type": "Object",
+                "properties": {
+                    "translate.targetLanguage": {
+                        "type": "string",
+                        "enum": [
+                            "de",
+                            "es",
+                            "en",
+                            "fr",
+                            "it",
+                            "ja",
+                            "ko",
+                            "ru",
+                            "zh-CN",
+                            "zh-TW"
+                        ],
+                        "enumDescriptions": [
+                            "German",
+                            "Spanish",
+                            "English",
+                            "French",
+                            "Italian",
+                            "Japanese",
+                            "Korean",
+                            "Russian",
+                            "Chinese (Simplified)",
+                            "Chinese (Traditional)"
+                        ],
+                        "description": "%translate.configuration.targetLanguage%"
+                    },
+                    "translate.multiLineMerge": {
+                        "type": "boolean",
+                        "default": false,
+                        "description": "%translate.configuration.MultilineMerge%"
+                    }
                 }
             }
-        },
-        "viewsContainers": {
-            "activitybar": [
-                {
-                    "id": "beautifulGirl",
-                    "title": "美女",
-                    "icon": "images/beautifulGirl.svg"
-                }
-            ]
-        },
-        "views": {
-            "beautifulGirl": [
-                {
-                    "id": "beautifulGirl1",
-                    "name": "国内美女"
-                },
-                {
-                    "id": "beautifulGirl2",
-                    "name": "国外美女"
-                },
-                {
-                    "id": "beautifulGirl3",
-                    "name": "人妖"
-                }
-            ]
-        },
-        "menus": {
-            "editor/context": [
-                {
-                    "when": "editorFocus",
-                    "command": "extension.helloWorld",
-                    "group": "navigation@6"
-                },
-                {
-                    "when": "editorFocus",
-                    "command": "extension.demo.getCurrentFilePath",
-                    "group": "navigation"
-                }
-            ],
-            "explorer/context": [
-                {
-                    "command": "extension.demo.getCurrentFilePath",
-                    "group": "navigation"
-                }
-            ]
-        }
+        ]
     },
     "scripts": {
-        "test": "node ./test/runTest.js"
+        "vscode:prepublish": "yarn run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "pretest": "yarn run compile"
     },
     "devDependencies": {
         "@types/glob": "^7.1.1",
         "@types/mocha": "^5.2.6",
         "@types/node": "^10.12.21",
         "@types/vscode": "^1.37.0",
-        "eslint": "^5.13.0",
         "glob": "^7.1.4",
         "mocha": "^6.1.4",
         "typescript": "^3.3.1",
+        "tslint": "^5.12.1",
         "vscode-test": "^1.0.2"
     },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/im/vscode-tools"
-    },
     "dependencies": {
-        "google-translate-api": "^2.3.0"
+        "vscode-languageclient": "^5.2.1",
+        "vscode-languageserver": "^5.2.1"
     }
 }
