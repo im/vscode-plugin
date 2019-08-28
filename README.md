@@ -1,6 +1,6 @@
-# vscode-plugin README
+# vscode-tools README
 
-This is the README for your extension "vscode-plugin". After writing up a brief description, we recommend including the following sections.
+This is the README for your extension "vscode-tools". After writing up a brief description, we recommend including the following sections.
 
 ## Features
 

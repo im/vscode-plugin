@@ -1,38 +1,141 @@
 {
-	"name": "vscode-plugin",
-	"displayName": "vscode-plugin",
-	"description": "",
-	"version": "0.0.1",
-	"engines": {
-		"vscode": "^1.37.0"
-	},
-	"categories": [
-		"Other"
-	],
-	"activationEvents": [
-		"onCommand:extension.helloWorld"
-	],
-	"main": "./extension.js",
-	"contributes": {
-		"commands": [
-			{
-				"command": "extension.helloWorld",
-				"title": "Hello World"
-			}
-		]
-	},
-	"scripts": {
-		"test": "node ./test/runTest.js"
-	},
-	"devDependencies": {
-		"@types/glob": "^7.1.1",
-		"@types/mocha": "^5.2.6",
-		"@types/node": "^10.12.21",
-		"@types/vscode": "^1.37.0",
-		"eslint": "^5.13.0",
-		"glob": "^7.1.4",
-		"mocha": "^6.1.4",
-		"typescript": "^3.3.1",
-		"vscode-test": "^1.0.2"
-	}
+    "name": "vscode-tools",
+    "displayName": "vscode 工具合集",
+    "description": "",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.37.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onCommand:extension.helloWorld",
+        "onCommand:extension.translateon"
+    ],
+    "main": "./src/extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "extension.helloWorld",
+                "title": "Hello World"
+            },
+            {
+                "command": "extension.demo.getCurrentFilePath",
+                "title": "获取当前文件(夹)路径"
+            },
+            {
+                "command": "extension.translateon",
+                "title": "translate on"
+            }
+        ],
+        "keybindings": [
+            {
+                "command": "extension.helloWorld",
+                "key": "ctrl+f10",
+                "mac": "cmd+f10",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "extension.translateon",
+                "key": "ctrl+t",
+                "mac": "cmd+t",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "extension.translateReplace",
+                "key": "ctrl+shift+r",
+                "mac": "cmd+shift+r",
+                "when": "editorTextFocus"
+            }
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "translation configuration",
+            "properties": {
+                "translation.api": {
+                    "type": "string",
+                    "default": "google-cn",
+                    "description": "api for translation now support google-cn and google"
+                },
+                "translation.fromLanguage": {
+                    "type": "string",
+                    "default": "en",
+                    "description": "from language"
+                },
+                "translation.targetLanguage": {
+                    "type": "string",
+                    "default": "zh-CN",
+                    "description": "target language"
+                },
+                "translation.detection": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "language detection"
+                }
+            }
+        },
+        "viewsContainers": {
+            "activitybar": [
+                {
+                    "id": "beautifulGirl",
+                    "title": "美女",
+                    "icon": "images/beautifulGirl.svg"
+                }
+            ]
+        },
+        "views": {
+            "beautifulGirl": [
+                {
+                    "id": "beautifulGirl1",
+                    "name": "国内美女"
+                },
+                {
+                    "id": "beautifulGirl2",
+                    "name": "国外美女"
+                },
+                {
+                    "id": "beautifulGirl3",
+                    "name": "人妖"
+                }
+            ]
+        },
+        "menus": {
+            "editor/context": [
+                {
+                    "when": "editorFocus",
+                    "command": "extension.helloWorld",
+                    "group": "navigation@6"
+                },
+                {
+                    "when": "editorFocus",
+                    "command": "extension.demo.getCurrentFilePath",
+                    "group": "navigation"
+                }
+            ],
+            "explorer/context": [
+                {
+                    "command": "extension.demo.getCurrentFilePath",
+                    "group": "navigation"
+                }
+            ]
+        }
+    },
+    "scripts": {
+        "test": "node ./test/runTest.js"
+    },
+    "devDependencies": {
+        "@types/glob": "^7.1.1",
+        "@types/mocha": "^5.2.6",
+        "@types/node": "^10.12.21",
+        "@types/vscode": "^1.37.0",
+        "eslint": "^5.13.0",
+        "glob": "^7.1.4",
+        "mocha": "^6.1.4",
+        "typescript": "^3.3.1",
+        "vscode-test": "^1.0.2"
+    },
+    "dependencies": {
+        "google-translate-api": "^2.3.0"
+    }
 }
